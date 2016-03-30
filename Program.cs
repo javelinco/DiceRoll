@@ -27,7 +27,7 @@ namespace Dice
                     Console.WriteLine(string.Format("Sequence: {0}; Dice Roll: {1}", index, diceRoll));
                 }
             }
-            Console.Read();
+            Console.ReadKey();
         }
 
         private static int RollDice(Random randomGenerator)
