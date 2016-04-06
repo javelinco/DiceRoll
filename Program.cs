@@ -10,24 +10,34 @@ namespace Dice
     {
         private const int MIN_DICE_ROLL = 1;
         private const int MAX_DICE_ROLL = 6;
+        private const int TOTAL_ROLLS = 50;
 
         static void Main(string[] args)
         {
-            RollDice();
+            var random = new Random();
+
+            var list1 = RollDice(TOTAL_ROLLS, random);
+            var list2 = RollDice(TOTAL_ROLLS, random);
+
+            var compare = list1.Except(list2);
+            foreach (var rollTotal in compare)
+            {
+                Console.WriteLine(string.Format("Roll Total: {0}", rollTotal));
+            }
+            Console.WriteLine(string.Format("There were {0} different rolls.", compare.Count()));
+            Console.ReadKey();
         }
 
-        private static void RollDice()
+        private static List<int> RollDice(int totalRolls, Random randomGenerator)
         {
-            var random = new Random();
-            for (int index = 0; index < 100; index++)
+            var rollTotal = new List<int>();
+
+            for (int index = 0; index < totalRolls; index++)
             {
-                int diceRoll = RollDice(random);
-                if (diceRoll == RollDice(random))
-                {
-                    Console.WriteLine(string.Format("Sequence: {0}; Dice Roll: {1}", index, diceRoll));
-                }
+                rollTotal.Add(RollDice(randomGenerator) + RollDice(randomGenerator));
             }
-            Console.ReadKey();
+
+            return rollTotal;
         }
 
         private static int RollDice(Random randomGenerator)
